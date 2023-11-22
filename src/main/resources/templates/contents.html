@@ -5,9 +5,56 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="layout/layout"
 layout:fragment="Content">
 <body>
-    <div class="row">
-        <h1>Contents blocks</h1>
-        <h3>Welcome [[${userId}]]</h3>
+<!-- Search Filter -->
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Search Filter</h4>
+            <form class="forms-sample" name = "inputTargetDateFrom" style="display: flex;">
+                <div class="form-group row col-9">
+                  <label for="inputStockTargetDate" class="col-sm-3 col-form-label">Target Date</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" id="inputStockTargetDate" placeholder="YYYY/MM/DD">
+                  </div>
+                </div>
+                <div class="col-3">
+                    <button id="confirm_stock_target_date" type="button" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-dark">Cancel</button>
+                </div>
+            </form>
+          </div>
+        </div>
     </div>
+</div>
+    
+<!-- Tables -->
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Daily Market Chart</h4>
+                </p>
+                <div class="table-responsive">
+                    <table id="stock_target_table" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Stock Key</th>
+                                <th>Stock Name</th>
+                                <th>Market Date</th>
+                                <th>Daily Rate</th>
+                                <th>Open Price</th>
+                                <th>Close Price</th>
+                                <th>High Price</th>
+                                <th>Low Price</th>
+                                <th>Trading Volume</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

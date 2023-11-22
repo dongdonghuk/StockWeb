@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rich.stockdemo.Repository.TargetRepository">
+    <select id="getTagetDatas" parameterType="String" resultType="TargetDTO">
+        SELECT 
+            d.STOCK_KEY AS stockKey,
+            s.STOCK_NAME AS stockName,
+            s.MARKET_TYPE AS marketType,
+            d.MARKET_DT AS marketDt,
+            d.OPEN_PRICE AS openPrice,
+            d.CLOSE_PRICE AS closePrice,
+            d.HIGH_PRICE AS highPrice,
+            d.LOW_PRICE AS lowPrice,
+            d.DAILY_RATE AS dailyRate,
+            d.TRADING_VOLUME AS tradingVolume
+        FROM ADMIN.DAILYMARKET d, ADMIN.STOCKS s 
+        where TO_CHAR(d.MARKET_DT,'YYYYMMDD') = #{tDate}
+        and d.STOCK_KEY = s.STOCK_KEY
+    </select>
+        <select id="getTargetDatasCount" parameterType="String" resultType="Integer">
+        SELECT COUNT(*)
+        FROM ADMIN.STOCKS
+        where TO_CHAR(STOCK_TARGET_DT,'YYYYMMDD') = #{tDate}
+    </select>
+</mapper>

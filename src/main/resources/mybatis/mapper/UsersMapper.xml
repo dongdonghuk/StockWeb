@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rich.stockdemo.Repository.UsersRepository">
+    <select id="getUsersCnt" resultType="Integer">
+        SELECT COUNT(*) FROM ADMIN.USERS
+    </select>
+    
+    <!-- <select id="getUsersCnt" resultType="Member">
+        select * from member
+    </select> -->
+
+    <select id="getUserInfo" parameterType="UsersDTO" resultType="UsersDTO">
+        SELECT 
+            USER_KEY AS userKey,
+            USER_ID AS userId,
+            USER_NAME AS userName,
+            USER_PASSWORD AS userpw
+        FROM ADMIN.USERS where USER_ID = #{userId} and USER_PASSWORD = #{userPw}
+    </select>
+
+    <!-- <insert id="createMember">
+        insert into member(name, id) values(#{name}, #{id})
+    </insert>
+
+    <delete id="deleteMember">
+        delete from member
+        where id = #{id}
+    </delete>
+
+    <update id="updateMember">
+        update member set name = #{name}
+        where id = #{id}
+    </update> -->
+
+</mapper>
