@@ -20,7 +20,7 @@
         where TO_CHAR(d.MARKET_DT,'YYYYMMDD') = #{tDate}
         and d.STOCK_KEY = s.STOCK_KEY
     </select>
-        <select id="getTargetDatasCount" parameterType="String" resultType="Integer">
+    <select id="getTargetDatasCount" parameterType="String" resultType="Integer">
         SELECT COUNT(*)
         FROM ADMIN.STOCKS
         where TO_CHAR(STOCK_TARGET_DT,'YYYYMMDD') = #{tDate}

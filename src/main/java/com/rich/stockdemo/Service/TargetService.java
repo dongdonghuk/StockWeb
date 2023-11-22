@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.rich.stockdemo.Model.TargetDTO;
+import com.rich.stockdemo.Model.TargetDTO.JsonRes;
 import com.rich.stockdemo.Repository.TargetRepository;
 
 @Service
@@ -23,16 +24,16 @@ public class TargetService {
 
     public List<TargetDTO> getTagetDatas(String tDate) {
         List<TargetDTO> result = new ArrayList<TargetDTO>() {};
-        int isExistTargetDate = 1;
+        int isExistTargetDate = 0;
         targetRepository.getTargetDatasCount(tDate);
         if(isExistTargetDate == 0) {
-            String nresult = webClient.get()
+            JsonRes nresult = webClient.get()
             .uri("/getTargetDatas/" + tDate)
             .retrieve()
-            .bodyToMono(TargetDTO.class)
-            .map(TargetDTO::getStockKey)
+            .bodyToMono(TargetDTO.JsonRes.class)
+            // .map(TargetDTO::getTargetList)
             .block();
-            System.out.println(nresult);
+            System.out.println(nresult.getStock_key());
         }
         else {
             result =  targetRepository.getTagetDatas(tDate);

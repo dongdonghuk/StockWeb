@@ -9,23 +9,27 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 @Alias("TargetDTO")
 public class TargetDTO {
-
-    @JsonProperty("stockKey")
-    private String stockKey; 
-    
-    private String stockName, marketType;
-    
+    private String stockKey,stockName, marketType;
     private int openPrice, closePrice, highPrice, lowPrice, dailyRate, tradingVolume;
     
     @DateTimeFormat(pattern = "yyyyMMdd")
     private LocalDateTime marketDt;
 
-    @JsonProperty("targets")
-    private List<TargetDTO> targetList;
-    
     public TargetDTO(){}
+
+    private List<JsonRes> targetList;
+
+    @Getter
+    public class JsonRes {
+    @JsonProperty
+    private String stock_key;
+    @JsonProperty
+    private String stock_name;
+    }
 }
+
