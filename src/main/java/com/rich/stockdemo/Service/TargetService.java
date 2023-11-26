@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.rich.stockdemo.Model.TargetDTO;
-import com.rich.stockdemo.Model.TargetDTO.JsonRes;
 import com.rich.stockdemo.Repository.TargetRepository;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class TargetService {
@@ -23,21 +25,30 @@ public class TargetService {
     }
 
     public List<TargetDTO> getTagetDatas(String tDate) {
-        List<TargetDTO> result = new ArrayList<TargetDTO>() {};
+        List<TargetDTO> _result = new ArrayList<TargetDTO>() {};
         int isExistTargetDate = 0;
         targetRepository.getTargetDatasCount(tDate);
         if(isExistTargetDate == 0) {
-            JsonRes nresult = webClient.get()
+            Mono<List<TargetDTO>> nresult = webClient.get()
             .uri("/getTargetDatas/" + tDate)
             .retrieve()
-            .bodyToMono(TargetDTO.JsonRes.class)
-            // .map(TargetDTO::getTargetList)
-            .block();
-            System.out.println(nresult.getStock_key());
+            .bodyToFlux(TargetDTO.class)
+            .collectList();
+
+            nresult.subscribe(
+                result -> {
+                    // 비동기적으로 처리할 로직을 작성
+                    System.out.println(result);
+                },
+                error -> {
+                    // 에러가 발생한 경우 처리
+                    System.err.println("Error occurred: " + error);
+                }
+        );
         }
         else {
-            result =  targetRepository.getTagetDatas(tDate);
+            _result =  targetRepository.getTagetDatas(tDate);
         }
-        return result;
+        return _result;
     }
 }
